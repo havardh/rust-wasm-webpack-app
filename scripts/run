@@ -1,0 +1,3 @@
+#/bin/bash
+
+docker run --rm -it -v $(pwd)/src:/src -p 3000:3000 havardh/rust-wasm-webpack-app
