@@ -4,4 +4,3 @@ version = "0.1.0"
 authors = ["Håvard Wormdal Høiby <havardwhoiby@gmail.com>"]
 
 [dependencies]
-

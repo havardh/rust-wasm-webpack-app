@@ -16,14 +16,14 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y && 
     rustup default stable && \
     rustup target add wasm32-unknown-emscripten
 
-    RUN mkdir /cmake && cd /cmake && \
-        wget  http://www.cmake.org/files/v3.4/cmake-3.4.3.tar.gz && \
-        tar -xvf cmake-3.4.3.tar.gz && \
-        cd cmake-3.4.3 && \
-        ./configure && \
-        make && \
-        make install && \
-        update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force
+RUN mkdir /cmake && cd /cmake && \
+    wget  http://www.cmake.org/files/v3.4/cmake-3.4.3.tar.gz && \
+    tar -xvf cmake-3.4.3.tar.gz && \
+    cd cmake-3.4.3 && \
+    ./configure && \
+    make && \
+    make install && \
+    update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force
 
 RUN mkdir /emscripten && cd /emscripten && \
     wget https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz && \
@@ -37,18 +37,26 @@ RUN cd /emscripten/emsdk-portable && \
 
 RUN cd /emscripten/emsdk-portable && \
     ./emsdk activate sdk-incoming-64bit
-#    cat emsdk_set_env.sh >> /root/.profile
+
+
+RUN echo "export PATH=$PATH:/emscripten/emsdk-portable:/emscripten/emsdk-portable/clang/fastcomp/build_incoming_64/bin:/emscripten/emsdk-portable/emscripten/incoming" >> /root/.profile
 
 ENV PATH=$PATH:/emscripten/emsdk-portable:/emscripten/emsdk-portable/clang/fastcomp/build_incoming_64/bin:/emscripten/emsdk-portable/emscripten/incoming
+
+
+WORKDIR /app
 
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-COPY . .
-
 RUN npm i
+
+COPY . .
 
 RUN ./node_modules/.bin/webpack
 
-CMD npm start
-# CMD ["/bin/bash", "--login"]
+RUN rm -rf /app
+
+VOLUME /app
+
+CMD ["/bin/bash", "--login"]

@@ -2,7 +2,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
-    path: __dirname + "/build",
+    path: "/build",
   },
   module: {
     rules: [
@@ -10,7 +10,7 @@ module.exports = {
         test: /\.rs$/,
         use: {
           loader: "rust-wasm-loader",
-          options: {path: "build"}
+          options: {path: "/build"}
         }
       }
     ]

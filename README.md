@@ -8,6 +8,8 @@ and docker.
 ```
 docker pull havardh/rust-wasm-webpack-app`
 ./scripts/run
+
+npm start
 ```
 
 This runs a docker image with the emscripten and Rust compiler and
@@ -24,7 +26,7 @@ When the server is running, modify the [`src/index.js`](src/index.js) or
 automatic update of the application. On Windows the docker process can be
 restarted to trigger the update manually.
 
-(If you want to fix this is suspect the `-v $(pwd)/src:/src` part of the run
+(If you want to fix this is suspect the `-v ...` part of the run
 command in [`scripts/run`](scripts/run) is not working on Windows)
 
 ## Troubleshooting

@@ -1,3 +1,4 @@
 [root]
-name = "rust-wasm-webpack-app"
-version = "1.0.1"
+name = "rust-wasm"
+version = "0.1.0"
+
